@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  gns3-server:
+    image: tejasmr/gns3-server:latest
+    container_name: gns3-server
+    restart: unless-stopped
+    ports:
+      - "3080:3080"
+    volumes:
+      # Projects persist between restarts
+      - gns3_projects:/root/GNS3/projects
+      # Drop your IOS images here on host
+      - ./images:/root/GNS3/images
+    cap_add:
+      - NET_ADMIN       # needed for ubridge / network interfaces
+      - SYS_PTRACE      # needed for some emulators
+    devices:
+      - /dev/net/tun    # TUN/TAP for virtual networking
+    environment:
+      - GNS3_SERVER_HOST=0.0.0.0
+      - GNS3_SERVER_PORT=3080
+
+volumes:
+  gns3_projects:
