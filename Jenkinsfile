@@ -38,11 +38,11 @@ pipeline {
                 bat 'ping -n 25 127.0.0.1 > nul'
                 bat 'curl -f http://localhost:13080/v2/version || exit 1'
                 echo "GNS3 server responded successfully!"
-            }
-            post {
-                always {
-                    bat "docker stop gns3-test-${BUILD_NUMBER} & docker rm gns3-test-${BUILD_NUMBER} & exit 0"
                 }
+                post {
+                    always {
+                bat "docker stop gns3-test-${BUILD_NUMBER} & docker rm gns3-test-${BUILD_NUMBER} & exit 0"
+                    }
             }
         }
 
