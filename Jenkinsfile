@@ -39,9 +39,7 @@ pipeline {
         }
 
         stage('Push to DockerHub') {
-            when {
-                branch 'main'
-            }
+            
             steps {
                 bat "echo %DOCKERHUB_CREDENTIALS_PSW% | docker login -u %DOCKERHUB_CREDENTIALS_USR% --password-stdin"
                 bat "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
@@ -51,9 +49,7 @@ pipeline {
         }
 
         stage('Tag & Push to GitHub Packages') {
-            when {
-                branch 'main'
-            }
+            
             steps {
                 withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
                     bat "echo %GITHUB_TOKEN% | docker login ghcr.io -u %GITHUB_USERNAME% --password-stdin"
