@@ -15,7 +15,7 @@ pipeline {
                 echo 'Pulling source from GitHub...'
                 checkout scm
             }
-        }       
+        }
 
         stage('Lint & Validate') {
             steps {
@@ -39,7 +39,6 @@ pipeline {
         }
 
         stage('Push to DockerHub') {
-            
             steps {
                 bat "echo %DOCKERHUB_CREDENTIALS_PSW% | docker login -u %DOCKERHUB_CREDENTIALS_USR% --password-stdin"
                 bat "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
@@ -49,7 +48,6 @@ pipeline {
         }
 
         stage('Tag & Push to GitHub Packages') {
-            
             steps {
                 withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
                     bat "echo %GITHUB_TOKEN% | docker login ghcr.io -u %GITHUB_USERNAME% --password-stdin"
@@ -61,15 +59,11 @@ pipeline {
     }
 
     post {
-    success {
-        echo 'Pipeline completed! Image is live on DockerHub.'
-    }
-    failure {
-        echo 'Pipeline failed. Check logs above.'
-    }
-    always {
-        node {
-            bat 'docker logout & exit 0'
+        success {
+            echo 'Pipeline completed! Image is live on DockerHub.'
+        }
+        failure {
+            echo 'Pipeline failed. Check logs above.'
         }
     }
 }
