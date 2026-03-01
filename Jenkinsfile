@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
+        DOCKERHUB_CREDENTIALS = credentials('jenkins-ci-token')
         IMAGE_NAME = 'tejasmr/gns3-server'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         GITHUB_USERNAME = 'tejasmr07'
