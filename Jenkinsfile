@@ -27,7 +27,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 echo "Building image: ${IMAGE_NAME}:${IMAGE_TAG}"
-                bat "docker build --build-arg GNS3_VERSION=2.2.44 -t ${IMAGE_NAME}:${IMAGE_TAG} -t ${IMAGE_NAME}:latest ."
+                bat "docker build --no-cache --build-arg GNS3_VERSION=2.2.44 -t ${IMAGE_NAME}:${IMAGE_TAG} -t ${IMAGE_NAME}:latest ."
             }
         }
 
