@@ -15,7 +15,7 @@ pipeline {
                 echo 'Pulling source from GitHub...'
                 checkout scm
             }
-        }
+        }       
 
         stage('Lint & Validate') {
             steps {
@@ -67,8 +67,8 @@ pipeline {
         failure {
             echo 'Pipeline failed. Check logs above.'
         }
-        always {
-            bat 'docker logout & exit 0'
-        }
+        // always {
+        //     bat 'docker logout & exit 0'
+        // }
     }
 }
