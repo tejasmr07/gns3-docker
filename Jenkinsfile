@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('jenkins-ci-token')
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
         IMAGE_NAME = 'tejasmr/gns3-server'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         GITHUB_USERNAME = 'tejasmr07'
@@ -61,14 +61,15 @@ pipeline {
     }
 
     post {
-        success {
-            echo 'Pipeline completed! Image is live on DockerHub.'
+    success {
+        echo 'Pipeline completed! Image is live on DockerHub.'
+    }
+    failure {
+        echo 'Pipeline failed. Check logs above.'
+    }
+    always {
+        node {
+            bat 'docker logout & exit 0'
         }
-        failure {
-            echo 'Pipeline failed. Check logs above.'
-        }
-        // always {
-        //     bat 'docker logout & exit 0'
-        // }
     }
 }
