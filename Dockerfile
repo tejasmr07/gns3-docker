@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
-ARG GNS3_VERSION=2.2.44
+ARG GNS3_VERSION=2.2.52
 
 RUN apt-get update && apt-get install -y \
     python3 python3-pip python3-dev git curl wget \
