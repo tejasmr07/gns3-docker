@@ -8,6 +8,10 @@ RUN apt-get update && apt-get install -y \
     dynamips vpcs iproute2 libpcap-dev libpcap0.8 \
     net-tools openssh-client telnet \
     && rm -rf /var/lib/apt/lists/*
+# Install correct VPCS version
+RUN apt-get remove -y vpcs && \
+    wget https://github.com/GNS3/vpcs/releases/download/v0.6.1/vpcs -O /usr/bin/vpcs && \
+    chmod +x /usr/bin/vpcs
 
 RUN git clone https://github.com/GNS3/ubridge.git /tmp/ubridge \
     && cd /tmp/ubridge && make && make install \
